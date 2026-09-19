@@ -1,0 +1,294 @@
+ninja: Entering directory `Fami32/build'
+[1/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/app/boot_check.cpp.obj
+[2/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_common.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_common.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[3/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_channel.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_channel.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_channel.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[4/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/app/main.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:176:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:172:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:193:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/app/boot_router.h:6:20: warning: attribute ignored in declaration of 'enum BOOT_MODE' [-Wattributes]
+    6 | __NOINIT_ATTR enum BOOT_MODE {
+      |                    ^~~~~~~~~
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/app/boot_router.h:6:20: note: attribute for 'enum BOOT_MODE' must follow the 'enum' keyword
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp: In function 'esp_lcd_panel_t* oled_init()':
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:500:5: warning: missing initializer for member 'spi_bus_config_t::data4_io_num' [-Wmissing-field-initializers]
+  500 |     };
+      |     ^
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:500:5: warning: missing initializer for member 'spi_bus_config_t::data5_io_num' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:500:5: warning: missing initializer for member 'spi_bus_config_t::data6_io_num' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:500:5: warning: missing initializer for member 'spi_bus_config_t::data7_io_num' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:500:5: warning: missing initializer for member 'spi_bus_config_t::data_io_default_level' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:500:5: warning: missing initializer for member 'spi_bus_config_t::flags' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:500:5: warning: missing initializer for member 'spi_bus_config_t::isr_cpu_id' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:500:5: warning: missing initializer for member 'spi_bus_config_t::intr_flags' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::on_color_trans_done' [-Wmissing-field-initializers]
+  519 |     };
+      |     ^
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::user_ctx' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::<unnamed struct>::dc_high_on_cmd' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::<unnamed struct>::dc_low_on_data' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::<unnamed struct>::octal_mode' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::<unnamed struct>::quad_mode' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::<unnamed struct>::sio_mode' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::<unnamed struct>::psram_dma_direct' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::<unnamed struct>::lsb_first' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:519:5: warning: missing initializer for member 'esp_lcd_panel_io_spi_config_t::<unnamed struct>::cs_high_active' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:536:5: warning: missing initializer for member 'esp_lcd_panel_dev_config_t::<anonymous>' [-Wmissing-field-initializers]
+  536 |     };
+      |     ^
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:536:5: warning: missing initializer for member 'esp_lcd_panel_dev_config_t::data_endian' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:536:5: warning: missing initializer for member 'esp_lcd_panel_dev_config_t::flags' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp: In function 'void app_main()':
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:695:5: warning: missing initializer for member 'esp_vfs_fat_mount_config_t::allocation_unit_size' [-Wmissing-field-initializers]
+  695 |     };
+      |     ^
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:695:5: warning: missing initializer for member 'esp_vfs_fat_mount_config_t::disk_status_check_enable' [-Wmissing-field-initializers]
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/app/main.cpp:695:5: warning: missing initializer for member 'esp_vfs_fat_mount_config_t::use_one_fat' [-Wmissing-field-initializers]
+[5/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_frames.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_frames.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_frames.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[6/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_info.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_info.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_info.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_info.cpp: In function 'void song_info_menu()':
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_info.cpp:16:42: warning: taking address of packed member of 'FRAME_BLOCK' may result in an unaligned pointer value [-Waddress-of-packed-member]
+   16 |     static int *song_setting[3] = {(int*)&ftm.fr_block.tempo, (int*)&ftm.fr_block.speed, (int*)&ftm.fr_block.pat_length};
+      |                                          ^~~~~~~~~~~~~~~~~~~
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_info.cpp:16:69: warning: taking address of packed member of 'FRAME_BLOCK' may result in an unaligned pointer value [-Waddress-of-packed-member]
+   16 |     static int *song_setting[3] = {(int*)&ftm.fr_block.tempo, (int*)&ftm.fr_block.speed, (int*)&ftm.fr_block.pat_length};
+      |                                                                     ^~~~~~~~~~~~~~~~~~~
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_info.cpp:16:96: warning: taking address of packed member of 'FRAME_BLOCK' may result in an unaligned pointer value [-Waddress-of-packed-member]
+   16 |     static int *song_setting[3] = {(int*)&ftm.fr_block.tempo, (int*)&ftm.fr_block.speed, (int*)&ftm.fr_block.pat_length};
+      |                                                                                                ^~~~~~~~~~~~~~~~~~~~~~~~
+[7/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_file.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_file.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_file.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[8/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_input.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_input.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_input.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[9/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/note_io.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/note_io.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/note_io.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[10/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_menu.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_menu.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_menu.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[11/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_settings.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_settings.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_settings.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[12/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_instrument.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_instrument.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_instrument.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[13/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/input/keypad_io.cpp.obj
+[14/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_tracker.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_tracker.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_tracker.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_tracker.cpp:8:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/app/boot_router.h:6:20: warning: attribute ignored in declaration of 'enum BOOT_MODE' [-Wattributes]
+    6 | __NOINIT_ATTR enum BOOT_MODE {
+      |                    ^~~~~~~~~
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/app/boot_router.h:6:20: note: attribute for 'enum BOOT_MODE' must follow the 'enum' keyword
+[15/25] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\DH\Desktop\CHIPBOX\05 FAMI32\04 git\Fami32\build\bootloader\esp-idf\esptool_py" && C:\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Espressif/frameworks/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 "C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/build/bootloader/bootloader.bin""
+
+Bootloader binary size 0x4c10 bytes. 0x33f0 bytes (41%) free.
+
+
+[16/25] No install step for 'bootloader'
+[17/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_visual.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_visual.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_visual.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[18/25] Completed 'bootloader'
+[19/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/gui/gui_dpcm_editor.cpp.obj
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/vrc7_synth.h:8,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/fami32core/fami32_player.h:6,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:27,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_instrument.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/gui/gui_dpcm_editor.cpp:1:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/audio/emu2413.h:25:9: warning: "PI" redefined
+   25 | #define PI 3.14159265358979323846
+      |         ^~
+In file included from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/Adafruit-GFX-Library/Adafruit_GFX.h:4,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/gfx_ssd1306/include/gfx_oled_ssd1306.h:17,
+                 from C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/include/gui/gui_common.h:19:
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/components/arduino-esp32-lite/cores/esp32/Arduino.h:45:9: note: this is the location of the previous definition
+   45 | #define PI         3.1415926535897932384626433832795
+      |         ^~
+[20/25] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/src/usb/usb_msc_mode.cpp.obj
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/usb/usb_msc_mode.cpp: In function 'void msc_mode()':
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/usb/usb_msc_mode.cpp:53:5: warning: missing initializer for member 'tinyusb_msc_storage_config_t::fat_fs' [-Wmissing-field-initializers]
+   53 |     };
+      |     ^
+C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/main/src/usb/usb_msc_mode.cpp:53:5: warning: missing initializer for member 'tinyusb_msc_storage_config_t::mount_point' [-Wmissing-field-initializers]
+[21/25] Linking C static library esp-idf\main\libmain.a
+[22/25] Generating esp-idf/esp_system/ld/sections.ld
+[23/25] Linking CXX executable Fami32.elf
+[24/25] Generating binary image from built executable
+esptool.py v4.12.0
+
+Creating esp32s3 image...
+
+Merged 2 ELF sections
+
+Successfully created esp32s3 image.
+
+Generated C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/build/Fami32.bin
+[25/25] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\DH\Desktop\CHIPBOX\05 FAMI32\04 git\Fami32\build\esp-idf\esptool_py" && C:\Espressif\python_env\idf5.5_py3.11_env\Scripts\python.exe C:/Espressif/frameworks/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/build/partition_table/partition-table.bin" "C:/Users/DH/Desktop/CHIPBOX/05 FAMI32/04 git/Fami32/build/Fami32.bin""
+Fami32.bin binary size 0x9f590 bytes. Smallest app partition is 0x300000 bytes. 0x260a70 bytes (79%) free.
+

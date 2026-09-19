@@ -1,0 +1,37 @@
+description: "Arduino core for ESP32, ESP32-C, ESP32-H, ESP32-P, ESP32-S series of SoCs"
+url: "https://github.com/espressif/arduino-esp32"
+license: "LGPL-2.1"
+targets:
+  - esp32
+  - esp32c2
+  - esp32c3
+  - esp32c5
+  - esp32c6
+  - esp32c61
+  - esp32h2
+  - esp32p4
+  - esp32s2
+  - esp32s3
+tags:
+  - arduino
+files:
+  exclude:
+    - ".*" # All files in the root directory that start with a dot.
+    - ".gitlab/"
+    - ".gitlab/**/*"
+    - "docs/"
+    - "docs/**/*"
+    - "idf_component_examples/"
+    - "idf_component_examples/**/*"
+    - "package/"
+    - "package/**/*"
+    - "tests/"
+    - "tests/**/*"
+    - "boards.txt"
+    - "CODE_OF_CONDUCT.md"
+    - "LICENSE.md"
+    - "package.json"
+    - "platform.txt"
+    - "programmers.txt"
+dependencies:
+  idf: ">=5.3,<5.6"
