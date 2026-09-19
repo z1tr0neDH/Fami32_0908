@@ -1,5 +1,7 @@
 #include "tinyusb_helper.h"
 #include "tinyusb_default_config.h"
+#include "tinyusb_cdc_acm.h"
+#include "tinyusb_console.h"
 #include "esp_log.h"
 
 // String descriptors
@@ -27,5 +29,31 @@ bool init_tinyusb(const uint8_t *cfg_desc, size_t desc_len)
         return false;
     }
 
+    return true;
+}
+
+bool init_tinyusb_console(void)
+{
+    const tinyusb_config_cdcacm_t acm_cfg = {
+        .cdc_port = TINYUSB_CDC_ACM_0,
+        .callback_rx = nullptr,
+        .callback_rx_wanted_char = nullptr,
+        .callback_line_state_changed = nullptr,
+        .callback_line_coding_changed = nullptr,
+    };
+
+    esp_err_t ret = tinyusb_cdcacm_init(&acm_cfg);
+    if (ret != ESP_OK) {
+        ESP_LOGE("USB CDC", "CDC-ACM init failed: %s", esp_err_to_name(ret));
+        return false;
+    }
+
+    ret = tinyusb_console_init(TINYUSB_CDC_ACM_0);
+    if (ret != ESP_OK) {
+        ESP_LOGE("USB CDC", "console redirection failed: %s", esp_err_to_name(ret));
+        return false;
+    }
+
+    ESP_LOGI("USB CDC", "USB monitor console ready");
     return true;
 }

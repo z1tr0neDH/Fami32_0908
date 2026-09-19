@@ -7,5 +7,6 @@
 #include <stdint.h>
 
 bool init_tinyusb(const uint8_t *cfg_desc, size_t desc_len);
+bool init_tinyusb_console(void);
 
 #endif

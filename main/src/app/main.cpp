@@ -899,12 +899,22 @@ void midi_callback(midiEventPacket_t packet) {
     midi_timeline_push(packet);
 }
 
-#define CONFIG_TOTAL_LEN_MIDI (TUD_CONFIG_DESC_LEN + TUD_MIDI_DESC_LEN)
+enum {
+    ITF_NUM_CDC = 0,
+    ITF_NUM_CDC_DATA,
+    ITF_NUM_MIDI,
+    ITF_NUM_MIDI_STREAMING,
+    ITF_NUM_TOTAL,
+};
+
+#define CONFIG_TOTAL_LEN_MIDI_CDC \
+    (TUD_CONFIG_DESC_LEN + TUD_CDC_DESC_LEN + TUD_MIDI_DESC_LEN)
 
 TU_ATTR_ALIGNED(4)
 uint8_t const usb_cfg_desc_midi[] = {
-    TUD_CONFIG_DESCRIPTOR(1, 2, 0, CONFIG_TOTAL_LEN_MIDI, 0x80, 100),
-    TUD_MIDI_DESCRIPTOR(0, 4, 0x01, 0x81, 64),
+    TUD_CONFIG_DESCRIPTOR(1, ITF_NUM_TOTAL, 0, CONFIG_TOTAL_LEN_MIDI_CDC, 0x80, 100),
+    TUD_CDC_DESCRIPTOR(ITF_NUM_CDC, 4, 0x81, 8, 0x02, 0x82, 64),
+    TUD_MIDI_DESCRIPTOR(ITF_NUM_MIDI, 4, 0x03, 0x83, 64),
 };
 
 extern "C" void app_main(void) {
@@ -917,6 +927,15 @@ extern "C" void app_main(void) {
         vTaskDelay(pdMS_TO_TICKS(5));
     }
     boot_router();
+
+    // The ROM USB Serial/JTAG port is lost when TinyUSB takes over GPIO19/20.
+    // Enumerate CDC together with MIDI before the remaining startup checks so
+    // failures in boot diagnostics, storage and task creation stay observable.
+    const bool usb_ready = init_tinyusb(usb_cfg_desc_midi, sizeof(usb_cfg_desc_midi));
+    if (usb_ready && !init_tinyusb_console()) {
+        ESP_LOGW("Fami32", "USB CDC monitor unavailable; continuing without it");
+    }
+
     if (boot_check()) show_check_info(&display, &keypad);
     if (keypad.volumeDownPressed() || keypad.isPressed(KEY_BACK)) boot_router_set_mode(USB_MSC);
     keypad.discardEvents();
@@ -993,8 +1012,7 @@ extern "C" void app_main(void) {
         write_config(config_path);
     }
 
-    init_tinyusb(usb_cfg_desc_midi, sizeof(usb_cfg_desc_midi));
-    MIDI.begin();
+    if (usb_ready) MIDI.begin();
 
     // Bring-up must reach the application without a working panel key map.
     keypad.discardEvents();
