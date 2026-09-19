@@ -448,7 +448,7 @@ const char* file_select(const char *basePath, file_select_accept_fn accept, void
         if (touch_input_pop_event(&touch_event)) {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
-        vTaskDelay(1);
+        vTaskDelay(89);
     }
 }
 
@@ -475,7 +475,7 @@ static bool vgm_export_progress(uint32_t ticks, uint32_t samples, void *user) {
     display.setCursor(0, 11);
     display.printf("%lu ticks\n%.02fs", (unsigned long)ticks, (float)samples / 44100.0f);
     display.display();
-    vTaskDelay(1);
+    vTaskDelay(89);
     return true;
 }
 

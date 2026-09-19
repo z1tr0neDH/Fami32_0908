@@ -310,7 +310,7 @@ void instrument_menu() {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(pdMS_TO_TICKS(20));
+        vTaskDelay(pdMS_TO_TICKS(30));
     }
 }
 
@@ -542,7 +542,7 @@ void vrc7_instrument_editor(instrument_t *inst) {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(pdMS_TO_TICKS(20));
+        vTaskDelay(pdMS_TO_TICKS(30));
     }
 }
 
@@ -830,7 +830,7 @@ static void fds_sequence_editor(instrument_t *inst) {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(pdMS_TO_TICKS(20));
+        vTaskDelay(pdMS_TO_TICKS(30));
     }
 }
 
@@ -1049,7 +1049,7 @@ void fds_instrument_editor(instrument_t *inst) {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(pdMS_TO_TICKS(20));
+        vTaskDelay(pdMS_TO_TICKS(30));
     }
 }
 
@@ -1249,7 +1249,7 @@ static void n163_instrument_editor(instrument_t *inst) {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(pdMS_TO_TICKS(20));
+        vTaskDelay(pdMS_TO_TICKS(30));
     }
 }
 
@@ -1584,6 +1584,6 @@ void sequence_editor(instrument_t *inst) {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(pdMS_TO_TICKS(20));
+        vTaskDelay(pdMS_TO_TICKS(30));
     }
 }
