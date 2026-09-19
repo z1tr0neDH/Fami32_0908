@@ -161,7 +161,7 @@ int menu(const char* name, const char* menuStr[], uint8_t maxMenuPos, void (*men
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(4);
+        vTaskDelay(pdMS_TO_TICKS(20));
     }
 }
 
@@ -227,7 +227,7 @@ int num_set_menu_int(const char* name, int min, int max, int count, int *num, in
             }
         }
 
-        vTaskDelay(4);
+        vTaskDelay(pdMS_TO_TICKS(20));
     }
     return *num;
 }

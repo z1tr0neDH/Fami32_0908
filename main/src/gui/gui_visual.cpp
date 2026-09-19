@@ -216,7 +216,7 @@ void osc_menu() {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(4);
+        vTaskDelay(pdMS_TO_TICKS(20));
     }
 }
 
@@ -343,6 +343,6 @@ void visual_menu() {
         if (touch_input_pop_event(&touch_event)) {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
-        vTaskDelay(3);
+        vTaskDelay(pdMS_TO_TICKS(20));
     }
 }

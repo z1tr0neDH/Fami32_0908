@@ -193,6 +193,6 @@ void frames_menu() {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(4);
+        vTaskDelay(pdMS_TO_TICKS(20));
     }
 }
