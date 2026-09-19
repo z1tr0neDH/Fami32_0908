@@ -368,6 +368,7 @@ enum class AudioOutput {
 
 static constexpr uint32_t kI2sWriteTimeoutMs = 50;
 static constexpr TickType_t kOutputMuteDelay = pdMS_TO_TICKS(4);
+static constexpr int64_t kAudioPerfReportPeriodUs = 1000000;
 
 static const char *audio_output_name(AudioOutput output) {
     switch (output) {
@@ -531,6 +532,44 @@ void sound_task(void *arg) {
     player.reset_audio_sample_clock();
     midi_timeline_reset();
 
+    int64_t perf_window_start_us = 0;
+    uint64_t perf_process_total_us = 0;
+    uint64_t perf_pack_total_us = 0;
+    uint64_t perf_feed_total_us = 0;
+    uint64_t perf_write_total_us = 0;
+    uint32_t perf_process_max_us = 0;
+    uint32_t perf_pack_max_us = 0;
+    uint32_t perf_feed_max_us = 0;
+    uint32_t perf_write_min_us = 0;
+    uint32_t perf_write_max_us = 0;
+    uint32_t perf_blocks = 0;
+    uint32_t perf_late_blocks = 0;
+    uint32_t perf_i2s_errors = 0;
+    uint32_t perf_peak_frame = 0;
+    uint32_t perf_peak_row = 0;
+    bool perf_was_playing = false;
+
+    auto reset_perf_window = [&]() {
+        perf_window_start_us = 0;
+        perf_process_total_us = 0;
+        perf_pack_total_us = 0;
+        perf_feed_total_us = 0;
+        perf_write_total_us = 0;
+        perf_process_max_us = 0;
+        perf_pack_max_us = 0;
+        perf_feed_max_us = 0;
+        perf_write_min_us = 0;
+        perf_write_max_us = 0;
+        perf_blocks = 0;
+        perf_late_blocks = 0;
+        perf_i2s_errors = 0;
+        perf_peak_frame = 0;
+        perf_peak_row = 0;
+    };
+
+    const uint32_t audio_block_budget_us = static_cast<uint32_t>(
+        (player.get_buf_size() * 1000000ULL + SAMP_RATE - 1) / SAMP_RATE);
+
     for (;;) {
         const AudioOutput requested_output = keypad.headphonesInserted()
             ? AudioOutput::Headphones
@@ -557,7 +596,9 @@ void sound_task(void *arg) {
             active_output = requested_output;
         }
 
+        const int64_t process_start_us = esp_timer_get_time();
         player.process_tick(midi_timeline_next_event, midi_timeline_dispatch_due, NULL);
+        const int64_t process_end_us = esp_timer_get_time();
         for (int i = 0; i < player.get_buf_size(); i++) {
             int32_t sample = (static_cast<int32_t>(player.get_buf()[i]) * g_vol) >> 5;
             if (sample > INT16_MAX) sample = INT16_MAX;
@@ -565,6 +606,7 @@ void sound_task(void *arg) {
             stereo_buffer[i * 2] = static_cast<int16_t>(sample);
             stereo_buffer[i * 2 + 1] = static_cast<int16_t>(sample);
         }
+        const int64_t pack_end_us = esp_timer_get_time();
 
         size_t written = 0;
         const esp_err_t write_result = i2s_channel_write(
@@ -573,7 +615,76 @@ void sound_task(void *arg) {
             stereo_buffer_bytes,
             &written,
             kI2sWriteTimeoutMs);
-        if (write_result != ESP_OK || written != stereo_buffer_bytes) {
+        const int64_t write_end_us = esp_timer_get_time();
+        const bool i2s_error = write_result != ESP_OK || written != stereo_buffer_bytes;
+
+        const uint32_t process_us = static_cast<uint32_t>(process_end_us - process_start_us);
+        const uint32_t pack_us = static_cast<uint32_t>(pack_end_us - process_end_us);
+        const uint32_t feed_us = static_cast<uint32_t>(pack_end_us - process_start_us);
+        const uint32_t write_us = static_cast<uint32_t>(write_end_us - pack_end_us);
+        const bool playing = player.get_play_status();
+
+        if (!playing) {
+            if (perf_was_playing) reset_perf_window();
+            perf_was_playing = false;
+        } else {
+            if (!perf_was_playing) {
+                reset_perf_window();
+                perf_was_playing = true;
+            }
+            if (perf_window_start_us == 0) perf_window_start_us = process_start_us;
+
+            perf_process_total_us += process_us;
+            perf_pack_total_us += pack_us;
+            perf_feed_total_us += feed_us;
+            perf_write_total_us += write_us;
+            if (process_us > perf_process_max_us) perf_process_max_us = process_us;
+            if (pack_us > perf_pack_max_us) perf_pack_max_us = pack_us;
+            if (feed_us > perf_feed_max_us) {
+                perf_feed_max_us = feed_us;
+                perf_peak_frame = static_cast<uint32_t>(player.get_frame());
+                perf_peak_row = static_cast<uint32_t>(player.get_row());
+            }
+            if (perf_blocks == 0 || write_us < perf_write_min_us) perf_write_min_us = write_us;
+            if (write_us > perf_write_max_us) perf_write_max_us = write_us;
+            perf_blocks++;
+            if (feed_us > audio_block_budget_us) perf_late_blocks++;
+            if (i2s_error) perf_i2s_errors++;
+
+            const int64_t report_elapsed_us = write_end_us - perf_window_start_us;
+            if (report_elapsed_us >= kAudioPerfReportPeriodUs) {
+                const uint64_t rate_x10 =
+                    (static_cast<uint64_t>(perf_blocks) * 10000000ULL +
+                     static_cast<uint64_t>(report_elapsed_us / 2)) /
+                    static_cast<uint64_t>(report_elapsed_us);
+                ESP_LOGI(
+                    "AudioPerf",
+                    "blocks=%u rate=%llu.%lluHz budget=%uus "
+                    "process(avg/max)=%llu/%uus pack(avg/max)=%llu/%uus "
+                    "feed(avg/max)=%llu/%uus late=%u peak=%u:%u "
+                    "write(avg/min/max)=%llu/%u/%uus i2s_err=%u",
+                    static_cast<unsigned>(perf_blocks),
+                    static_cast<unsigned long long>(rate_x10 / 10),
+                    static_cast<unsigned long long>(rate_x10 % 10),
+                    static_cast<unsigned>(audio_block_budget_us),
+                    static_cast<unsigned long long>(perf_process_total_us / perf_blocks),
+                    static_cast<unsigned>(perf_process_max_us),
+                    static_cast<unsigned long long>(perf_pack_total_us / perf_blocks),
+                    static_cast<unsigned>(perf_pack_max_us),
+                    static_cast<unsigned long long>(perf_feed_total_us / perf_blocks),
+                    static_cast<unsigned>(perf_feed_max_us),
+                    static_cast<unsigned>(perf_late_blocks),
+                    static_cast<unsigned>(perf_peak_frame),
+                    static_cast<unsigned>(perf_peak_row),
+                    static_cast<unsigned long long>(perf_write_total_us / perf_blocks),
+                    static_cast<unsigned>(perf_write_min_us),
+                    static_cast<unsigned>(perf_write_max_us),
+                    static_cast<unsigned>(perf_i2s_errors));
+                reset_perf_window();
+            }
+        }
+
+        if (i2s_error) {
             ESP_LOGE("Fami32Audio", "%s write failed: %s, %u/%u bytes",
                      audio_output_name(active_output),
                      esp_err_to_name(write_result),
