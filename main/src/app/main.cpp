@@ -657,12 +657,11 @@ void sound_task(void *arg) {
                     (static_cast<uint64_t>(perf_blocks) * 10000000ULL +
                      static_cast<uint64_t>(report_elapsed_us / 2)) /
                     static_cast<uint64_t>(report_elapsed_us);
-                ESP_LOGI(
-                    "AudioPerf",
-                    "blocks=%u rate=%llu.%lluHz budget=%uus "
+                printf(
+                    "AudioPerf blocks=%u rate=%llu.%lluHz budget=%uus "
                     "process(avg/max)=%llu/%uus pack(avg/max)=%llu/%uus "
                     "feed(avg/max)=%llu/%uus late=%u peak=%u:%u "
-                    "write(avg/min/max)=%llu/%u/%uus i2s_err=%u",
+                    "write(avg/min/max)=%llu/%u/%uus i2s_err=%u\n",
                     static_cast<unsigned>(perf_blocks),
                     static_cast<unsigned long long>(rate_x10 / 10),
                     static_cast<unsigned long long>(rate_x10 % 10),
