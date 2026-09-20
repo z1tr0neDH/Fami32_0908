@@ -208,7 +208,7 @@ bool edit_integer_item(const SettingItem &item) {
             }
         }
 
-        vTaskDelay(pdMS_TO_TICKS(30));
+        vTaskDelay(4);
     }
 }
 
@@ -277,7 +277,7 @@ int select_option(const char *title, const char *options[], int option_count, in
             }
         }
 
-        vTaskDelay(pdMS_TO_TICKS(30));
+        vTaskDelay(4);
     }
 }
 
@@ -486,7 +486,7 @@ void settings_page() {
             }
         }
 
-        vTaskDelay(pdMS_TO_TICKS(30));
+        vTaskDelay(4);
     }
 
     if (config_dirty) {

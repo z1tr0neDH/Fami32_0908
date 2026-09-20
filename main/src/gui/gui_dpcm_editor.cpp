@@ -432,7 +432,7 @@ void dpcm_assignment_editor(int sample_index) {
             }
         }
 
-        vTaskDelay(pdMS_TO_TICKS(30));
+        vTaskDelay(4);
     }
 }
 
@@ -600,6 +600,6 @@ void sample_editor_menu() {
             process_note_io_event(note_io_event_from_input(touch_event));
         }
 
-        vTaskDelay(pdMS_TO_TICKS(30));
+        vTaskDelay(4);
     }
 }

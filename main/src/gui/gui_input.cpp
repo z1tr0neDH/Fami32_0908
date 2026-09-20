@@ -168,7 +168,7 @@ void displayKeyboard(const char *title, char *targetStr, uint8_t maxLen) {
                 keyboardStat[touch_event.key] = false;
             }
         }
-        vTaskDelay(pdMS_TO_TICKS(30));
+        vTaskDelay(4);
     }
     // Restore default font after exiting
     display.setFont(&rismol35);

@@ -273,7 +273,7 @@ void tracker_menu() {
                 }
             }
         }
-        vTaskDelay(pdMS_TO_TICKS(30));
+        vTaskDelay(10);
     }
 }
 
