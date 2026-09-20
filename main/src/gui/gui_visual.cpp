@@ -93,6 +93,7 @@ static void visual_channel_values(uint8_t channel, uint8_t *pitchVal, uint8_t *v
 }
 
 void osc_menu() {
+    player.set_vrc7_channel_capture_enabled(true);
     for (;;) {
         display.clearDisplay();
         display.setCursor(2, 0);
@@ -218,6 +219,7 @@ void osc_menu() {
 
         vTaskDelay(4);
     }
+    player.set_vrc7_channel_capture_enabled(false);
 }
 
 

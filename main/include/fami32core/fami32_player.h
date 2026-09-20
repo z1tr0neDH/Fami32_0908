@@ -5,6 +5,7 @@
 #include "fami32_channel.h"
 #include "vrc7_synth.h"
 #include "src_config.h"
+#include "psram_allocator.h"
 
 typedef bool (*fami_timeline_next_event_cb)(uint64_t window_start_sample,
                                             uint64_t window_end_sample,
@@ -36,7 +37,7 @@ private:
     uint32_t row_event_counter = 0;
     uint64_t audio_sample_clock = 0;
 
-    std::vector<int16_t> buf;
+    PsramVector<int16_t> buf;
 
     uint8_t delay_count[FAMI32_MAX_CHANNELS] = {0};
     bool delay_status[FAMI32_MAX_CHANNELS] = {0};
@@ -105,6 +106,7 @@ public:
     bool get_play_status();
     void set_mute(int c, bool s);
     bool get_mute(int c);
+    void set_vrc7_channel_capture_enabled(bool enabled);
     uint32_t get_channel_count() const;
     const fami_player_perf_t &get_last_perf() const;
 

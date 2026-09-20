@@ -3,6 +3,7 @@
 
 #include "fami32_common.h"
 #include "fami32_instrument.h"
+#include "psram_allocator.h"
 
 #define FIR_TAPS 7
 #define FIR_COEF_SHIFT 12
@@ -48,8 +49,8 @@ private:
 
     int tick_length;
     int nominal_tick_length;
-    std::vector<int16_t> tick_buf;
-    std::vector<uint8_t> apu_level_buf;
+    PsramVector<int16_t> tick_buf;
+    PsramVector<uint8_t> apu_level_buf;
 
     WAVE_TYPE mode;
     WAVE_TYPE chl_mode;

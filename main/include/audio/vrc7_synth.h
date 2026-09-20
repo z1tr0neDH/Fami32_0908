@@ -1,6 +1,7 @@
 #ifndef VRC7_SYNTH_H
 #define VRC7_SYNTH_H
 
+#include <atomic>
 #include <stdint.h>
 #include <string.h>
 
@@ -19,6 +20,8 @@ private:
     int16_t last_sample = 0;
     int16_t last_channel_sample[CHANNEL_COUNT] = {};
     int16_t channel_sample[CHANNEL_COUNT] = {};
+    std::atomic<bool> channel_capture_enabled{false};
+    bool channel_capture_active = false;
     bool ready = false;
 
     static int16_t clamp_i16(int32_t value);
@@ -30,7 +33,9 @@ public:
     void init(uint32_t sample_rate);
     void reset();
     void write_reg(uint8_t reg, uint8_t value);
-    int16_t calc();
+    int16_t calc(bool capture_channels);
+    void set_channel_capture_enabled(bool enabled);
+    bool is_channel_capture_enabled() const;
     int16_t get_channel_sample(uint8_t channel) const;
     bool is_ready() const;
 };

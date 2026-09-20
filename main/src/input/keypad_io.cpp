@@ -28,12 +28,12 @@ constexpr uint8_t kColumnBits[6] = {
  * Physical switch mapping, isolated here because the netlist has reference
  * designators but no front-panel legends. H2..H6 x L1..L4 are SW1..SW20.
  * H1/H2 x KEY3_IN are the two encoder push switches.
- * SW17..SW20 and SW27..SW28 are scanned for diagnostics but intentionally
- * have no application event until the existing UI assigns them a function.
+ * SW1..SW4 are navigation controls, SW5..SW20 are note keys 0..15, and
+ * SW27..SW28 are scanned for diagnostics but intentionally have no event.
  */
 constexpr int8_t kControlMap[6][6] = {
     {-1, -1, -1, -1, KEY_MENU, KEY_BACK},
-    {-1, -1, -1, -1, KEY_NAVI, KEY_OK},
+    {KEY_OK, KEY_UP, KEY_DOWN, KEY_BACK, KEY_NAVI, KEY_OK},
     {-1, -1, -1, -1, KEY_S,    KEY_OCTD},
     {-1, -1, -1, -1, KEY_P,    KEY_OCTU},
     {-1, -1, -1, -1, -1,       -1},
@@ -249,8 +249,8 @@ void KeypadIO::updateMatrix(uint64_t raw_state) {
 
         const uint8_t row = static_cast<uint8_t>(index / MATRIX_COLS);
         const uint8_t col = static_cast<uint8_t>(index % MATRIX_COLS);
-        if (row >= 1 && col < 4) {
-            const uint8_t note_key = static_cast<uint8_t>((row - 1) * 4 + col);
+        if (row >= 2 && col < 4) {
+            const uint8_t note_key = static_cast<uint8_t>((row - 2) * 4 + col);
             if (note_key < FAMI32_NOTE_KEY_COUNT) {
                 touch_input_push_event(note_key, sample ? KEY_JUST_PRESSED : KEY_JUST_RELEASED);
             }

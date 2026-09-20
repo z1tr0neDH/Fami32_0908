@@ -6,7 +6,18 @@
 #include <ctype.h>
 #include <errno.h>
 
+#ifndef FAMI32_DESKTOP
+#include "esp_heap_caps.h"
+#include "esp_log.h"
+#endif
+
 #define LINE_BUFFER_SIZE 512
+
+#ifndef FAMI32_DESKTOP
+#define CONFIG_SAVE_MIN_INTERNAL_FREE 8192
+#define CONFIG_SAVE_MIN_INTERNAL_LARGEST 2048
+static const char *CONFIG_TAG = "Fami32Config";
+#endif
 
 static ConfigEntry configEntries[MAX_ENTRIES];
 static int entryCount = 0;
@@ -419,6 +430,20 @@ int write_config(const char *filename) {
     if (!filename) {
         return CONFIG_FILE_ERROR;
     }
+
+#ifndef FAMI32_DESKTOP
+    const uint32_t internal_caps = MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT;
+    const size_t internal_free = heap_caps_get_free_size(internal_caps);
+    const size_t internal_largest = heap_caps_get_largest_free_block(internal_caps);
+    if (internal_free < CONFIG_SAVE_MIN_INTERNAL_FREE ||
+        internal_largest < CONFIG_SAVE_MIN_INTERNAL_LARGEST) {
+        ESP_LOGE(CONFIG_TAG,
+                 "config save refused: internal free=%u largest=%u",
+                 (unsigned)internal_free,
+                 (unsigned)internal_largest);
+        return CONFIG_FILE_ERROR;
+    }
+#endif
 
     if (build_temp_filename(filename, tempFilename, sizeof(tempFilename)) != 0) {
         return CONFIG_FILE_ERROR;

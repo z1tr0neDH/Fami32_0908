@@ -166,6 +166,7 @@ extern "C" int app_main(void) {
 
 #include "keypad_io.h"
 #include "nau88c22.h"
+#include "psram_allocator.h"
 #include <vector>
 #include "driver/gpio.h"
 #include "esp_log.h"
@@ -177,6 +178,7 @@ extern "C" int app_main(void) {
 #include <dirent.h>
 #include "esp_vfs_fat.h"
 #include "esp_partition.h"
+#include "esp_heap_caps.h"
 #include "esp_timer.h"
 #include "gui/gui_common.h"
 #include "gui/gui_input.h"
@@ -219,6 +221,20 @@ static constexpr uint32_t KEYPAD_TASK_STACK_SIZE = 4096;
 static constexpr uint32_t SOUND_TASK_STACK_SIZE = 4096;
 // Keep extra headroom for planned GUI animations and deeper rendering paths.
 static constexpr uint32_t GUI_TASK_STACK_SIZE = 12288;
+
+static void log_heap_state(const char *stage) {
+    constexpr uint32_t internal_caps = MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT;
+    constexpr uint32_t psram_caps = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;
+    ESP_LOGI(
+        "Fami32Mem",
+        "%s: internal free=%u min=%u largest=%u; psram free=%u largest=%u",
+        stage,
+        static_cast<unsigned>(heap_caps_get_free_size(internal_caps)),
+        static_cast<unsigned>(heap_caps_get_minimum_free_size(internal_caps)),
+        static_cast<unsigned>(heap_caps_get_largest_free_block(internal_caps)),
+        static_cast<unsigned>(heap_caps_get_free_size(psram_caps)),
+        static_cast<unsigned>(heap_caps_get_largest_free_block(psram_caps)));
+}
 
 typedef struct {
     uint64_t sample_time;
@@ -521,12 +537,15 @@ static esp_err_t start_i2s_output(AudioOutput output,
 
 void sound_task(void *arg) {
     (void)arg;
+    log_heap_state("sound/before-player");
     player.init(&ftm);
+    log_heap_state("sound/after-player");
 
     const bool codec_ready = fami32_codec_init() == ESP_OK;
 
-    std::vector<int16_t> stereo_buffer(player.get_buf_size() * 2, 0);
+    PsramVector<int16_t> stereo_buffer(player.get_buf_size() * 2, 0);
     const size_t stereo_buffer_bytes = stereo_buffer.size() * sizeof(int16_t);
+    log_heap_state("sound/ready");
     AudioOutput active_output = AudioOutput::None;
 
     player.reset_audio_sample_clock();
@@ -1068,6 +1087,8 @@ extern "C" void app_main(void) {
     // Bring-up must reach the application without a working panel key map.
     keypad.discardEvents();
     touch_input_flush();
+
+    log_heap_state("app/before-tasks");
 
     BaseType_t task_result = xTaskCreatePinnedToCore(
         keypad_task, "KEYPAD", KEYPAD_TASK_STACK_SIZE, NULL, 4, &KEYPAD_TASK_HD, 1);

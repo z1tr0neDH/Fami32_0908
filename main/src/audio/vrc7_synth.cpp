@@ -32,6 +32,7 @@ void VRC7_SYNTH::init(uint32_t sample_rate) {
     last_sample = 0;
     memset(last_channel_sample, 0, sizeof(last_channel_sample));
     memset(channel_sample, 0, sizeof(channel_sample));
+    channel_capture_active = false;
     ready = true;
 }
 
@@ -43,6 +44,7 @@ void VRC7_SYNTH::reset() {
     last_sample = 0;
     memset(last_channel_sample, 0, sizeof(last_channel_sample));
     memset(channel_sample, 0, sizeof(channel_sample));
+    channel_capture_active = false;
 }
 
 void VRC7_SYNTH::write_reg(uint8_t reg, uint8_t value) {
@@ -51,11 +53,23 @@ void VRC7_SYNTH::write_reg(uint8_t reg, uint8_t value) {
     }
 }
 
-int16_t VRC7_SYNTH::calc() {
+int16_t VRC7_SYNTH::calc(bool capture_channels) {
     if (opll == nullptr) {
         memset(channel_sample, 0, sizeof(channel_sample));
+        channel_capture_active = false;
         return 0;
     }
+
+    if (capture_channels && !channel_capture_active) {
+        // Discard peaks accumulated while capture was disabled so the first
+        // visible sample only represents newly generated audio.
+        for (uint8_t ch = 0; ch < CHANNEL_COUNT; ++ch) {
+            (void)OPLL_getchanvol(ch);
+        }
+        memset(last_channel_sample, 0, sizeof(last_channel_sample));
+        memset(channel_sample, 0, sizeof(channel_sample));
+    }
+    channel_capture_active = capture_channels;
 
     int32_t raw = OPLL_calc(opll);
     if (raw > 3600) raw = 3600;
@@ -73,18 +87,28 @@ int16_t VRC7_SYNTH::calc() {
      * OPLL_getchanvol(); capture those samples here so the player can copy
      * them into the six FM channel buffers without running a second OPLL.
      */
-    for (uint8_t ch = 0; ch < CHANNEL_COUNT; ++ch) {
-        int32_t ch_raw = OPLL_getchanvol(ch) << 3;
-        if (ch_raw > 3600) ch_raw = 3600;
-        if (ch_raw < -3200) ch_raw = -3200;
+    if (capture_channels) {
+        for (uint8_t ch = 0; ch < CHANNEL_COUNT; ++ch) {
+            int32_t ch_raw = OPLL_getchanvol(ch) << 3;
+            if (ch_raw > 3600) ch_raw = 3600;
+            if (ch_raw < -3200) ch_raw = -3200;
 
-        int32_t ch_scaled = (int32_t)((float)ch_raw * AMPLIFY);
-        ch_scaled = clamp_i16(ch_scaled);
-        channel_sample[ch] = (int16_t)((ch_scaled + last_channel_sample[ch]) >> 1);
-        last_channel_sample[ch] = (int16_t)ch_scaled;
+            int32_t ch_scaled = (int32_t)((float)ch_raw * AMPLIFY);
+            ch_scaled = clamp_i16(ch_scaled);
+            channel_sample[ch] = (int16_t)((ch_scaled + last_channel_sample[ch]) >> 1);
+            last_channel_sample[ch] = (int16_t)ch_scaled;
+        }
     }
 
     return out;
+}
+
+void VRC7_SYNTH::set_channel_capture_enabled(bool enabled) {
+    channel_capture_enabled.store(enabled, std::memory_order_relaxed);
+}
+
+bool VRC7_SYNTH::is_channel_capture_enabled() const {
+    return channel_capture_enabled.load(std::memory_order_relaxed);
 }
 
 int16_t VRC7_SYNTH::get_channel_sample(uint8_t channel) const {
