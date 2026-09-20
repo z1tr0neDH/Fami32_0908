@@ -12,6 +12,14 @@ typedef bool (*fami_timeline_next_event_cb)(uint64_t window_start_sample,
                                             void *user);
 typedef void (*fami_timeline_dispatch_cb)(uint64_t sample_time, void *user);
 
+struct fami_player_perf_t {
+    uint32_t event_cycles = 0;
+    uint32_t channel_cycles[FAMI32_MAX_CHANNELS] = {};
+    uint32_t mix_cycles = 0;
+    uint32_t other_cycles = 0;
+    uint32_t total_cycles = 0;
+};
+
 class FAMI_PLAYER {
 private:
     FTM_FILE *ftm_data;
@@ -48,6 +56,7 @@ private:
     bool pending_next_frame = false;
     int pending_jump_frame_target = 0;
     int pending_next_frame_row = 0;
+    fami_player_perf_t last_perf = {};
 public:
     FAMI_CHANNEL channel[FAMI32_MAX_CHANNELS];
 
@@ -97,6 +106,7 @@ public:
     void set_mute(int c, bool s);
     bool get_mute(int c);
     uint32_t get_channel_count() const;
+    const fami_player_perf_t &get_last_perf() const;
 
 private:
     void process_tick_events();

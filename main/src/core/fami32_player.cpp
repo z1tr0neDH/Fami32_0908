@@ -1,5 +1,9 @@
 #include "fami32_player.h"
 
+#ifndef FAMI32_DESKTOP
+#include "esp_cpu.h"
+#endif
+
 namespace {
 
 float pulse_table[31];
@@ -52,6 +56,14 @@ int16_t clamp_i16(int32_t sample) {
     if (sample > 32767) return 32767;
     if (sample < -32768) return -32768;
     return (int16_t)sample;
+}
+
+inline uint32_t perf_cycle_count() {
+#ifdef FAMI32_DESKTOP
+    return 0;
+#else
+    return esp_cpu_get_cycle_count();
+#endif
 }
 
 } // namespace
@@ -412,9 +424,12 @@ void FAMI_PLAYER::render_tick_segment(size_t dst_offset, size_t sample_count, bo
 
     uint32_t count = get_channel_count();
     for (uint32_t c = 0; c < count; c++) {
+        const uint32_t channel_start = perf_cycle_count();
         channel[c].render_tick_samples(sample_count, advance_tick_phase);
+        last_perf.channel_cycles[c] += perf_cycle_count() - channel_start;
     }
 
+    const uint32_t mix_start = perf_cycle_count();
     bool use_vrc7 = ftm_data != NULL && ftm_data->vrc7_enabled() && vrc7.is_ready();
     if (use_vrc7) {
         sync_vrc7_registers();
@@ -490,6 +505,7 @@ void FAMI_PLAYER::render_tick_segment(size_t dst_offset, size_t sample_count, bo
         r = lpf.process(r);
         buf[dst_offset + i] = r;
     }
+    last_perf.mix_cycles += perf_cycle_count() - mix_start;
 }
 
 uint8_t FAMI_PLAYER::get_chl_vol(int n) {
@@ -649,6 +665,8 @@ void FAMI_PLAYER::process_tick() {
 void FAMI_PLAYER::process_tick(fami_timeline_next_event_cb next_event,
                                fami_timeline_dispatch_cb dispatch_event,
                                void *timeline_user) {
+    memset(&last_perf, 0, sizeof(last_perf));
+    const uint32_t total_start = perf_cycle_count();
     const size_t total_samples = buf.size();
     const uint64_t window_start = audio_sample_clock;
     const uint64_t window_end = window_start + total_samples;
@@ -659,6 +677,7 @@ void FAMI_PLAYER::process_tick(fami_timeline_next_event_cb next_event,
 
     process_tick_events();
     begin_channel_tick();
+    last_perf.event_cycles = perf_cycle_count() - total_start;
 
     size_t offset = 0;
     bool advance_tick_phase = true;
@@ -688,6 +707,15 @@ void FAMI_PLAYER::process_tick(fami_timeline_next_event_cb next_event,
 
     end_channel_tick();
     audio_sample_clock = window_end;
+
+    last_perf.total_cycles = perf_cycle_count() - total_start;
+    uint32_t accounted_cycles = last_perf.event_cycles + last_perf.mix_cycles;
+    for (uint32_t c = 0; c < get_channel_count(); ++c) {
+        accounted_cycles += last_perf.channel_cycles[c];
+    }
+    if (last_perf.total_cycles > accounted_cycles) {
+        last_perf.other_cycles = last_perf.total_cycles - accounted_cycles;
+    }
 }
 
 void FAMI_PLAYER::reset_audio_sample_clock() {
@@ -815,6 +843,10 @@ uint32_t FAMI_PLAYER::get_channel_count() const {
     if (count > FAMI32_MAX_CHANNELS) count = FAMI32_MAX_CHANNELS;
     if (count < FAMI32_BASE_CHANNELS) count = FAMI32_BASE_CHANNELS;
     return count;
+}
+
+const fami_player_perf_t &FAMI_PLAYER::get_last_perf() const {
+    return last_perf;
 }
 
 void FAMI_PLAYER::recalculate_ticks_row() {

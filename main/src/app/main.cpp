@@ -537,6 +537,10 @@ void sound_task(void *arg) {
     uint64_t perf_pack_total_us = 0;
     uint64_t perf_feed_total_us = 0;
     uint64_t perf_write_total_us = 0;
+    uint64_t perf_event_total_cycles = 0;
+    uint64_t perf_mix_total_cycles = 0;
+    uint64_t perf_other_total_cycles = 0;
+    uint64_t perf_channel_total_cycles[FAMI32_MAX_CHANNELS] = {};
     uint32_t perf_process_max_us = 0;
     uint32_t perf_pack_max_us = 0;
     uint32_t perf_feed_max_us = 0;
@@ -555,6 +559,10 @@ void sound_task(void *arg) {
         perf_pack_total_us = 0;
         perf_feed_total_us = 0;
         perf_write_total_us = 0;
+        perf_event_total_cycles = 0;
+        perf_mix_total_cycles = 0;
+        perf_other_total_cycles = 0;
+        memset(perf_channel_total_cycles, 0, sizeof(perf_channel_total_cycles));
         perf_process_max_us = 0;
         perf_pack_max_us = 0;
         perf_feed_max_us = 0;
@@ -599,6 +607,7 @@ void sound_task(void *arg) {
         const int64_t process_start_us = esp_timer_get_time();
         player.process_tick(midi_timeline_next_event, midi_timeline_dispatch_due, NULL);
         const int64_t process_end_us = esp_timer_get_time();
+        const fami_player_perf_t &player_perf = player.get_last_perf();
         for (int i = 0; i < player.get_buf_size(); i++) {
             int32_t sample = (static_cast<int32_t>(player.get_buf()[i]) * g_vol) >> 5;
             if (sample > INT16_MAX) sample = INT16_MAX;
@@ -638,6 +647,13 @@ void sound_task(void *arg) {
             perf_pack_total_us += pack_us;
             perf_feed_total_us += feed_us;
             perf_write_total_us += write_us;
+            perf_event_total_cycles += player_perf.event_cycles;
+            perf_mix_total_cycles += player_perf.mix_cycles;
+            perf_other_total_cycles += player_perf.other_cycles;
+            const uint32_t perf_channel_count = player.get_channel_count();
+            for (uint32_t c = 0; c < perf_channel_count; ++c) {
+                perf_channel_total_cycles[c] += player_perf.channel_cycles[c];
+            }
             if (process_us > perf_process_max_us) perf_process_max_us = process_us;
             if (pack_us > perf_pack_max_us) perf_pack_max_us = pack_us;
             if (feed_us > perf_feed_max_us) {
@@ -657,6 +673,26 @@ void sound_task(void *arg) {
                     (static_cast<uint64_t>(perf_blocks) * 10000000ULL +
                      static_cast<uint64_t>(report_elapsed_us / 2)) /
                     static_cast<uint64_t>(report_elapsed_us);
+                uint32_t top_channel[3] = {};
+                uint64_t top_cycles[3] = {};
+                uint64_t render_total_cycles = 0;
+                for (uint32_t c = 0; c < perf_channel_count; ++c) {
+                    const uint64_t cycles = perf_channel_total_cycles[c];
+                    render_total_cycles += cycles;
+                    for (uint32_t rank = 0; rank < 3; ++rank) {
+                        if (cycles > top_cycles[rank]) {
+                            for (uint32_t move = 2; move > rank; --move) {
+                                top_cycles[move] = top_cycles[move - 1];
+                                top_channel[move] = top_channel[move - 1];
+                            }
+                            top_cycles[rank] = cycles;
+                            top_channel[rank] = c;
+                            break;
+                        }
+                    }
+                }
+                const uint64_t stage_divisor =
+                    static_cast<uint64_t>(perf_blocks) * CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ;
                 printf(
                     "AudioPerf blocks=%u rate=%llu.%lluHz budget=%uus "
                     "process(avg/max)=%llu/%uus pack(avg/max)=%llu/%uus "
@@ -679,6 +715,22 @@ void sound_task(void *arg) {
                     static_cast<unsigned>(perf_write_min_us),
                     static_cast<unsigned>(perf_write_max_us),
                     static_cast<unsigned>(perf_i2s_errors));
+                printf(
+                    "AudioStage avg_us event=%llu render=%llu mix=%llu other=%llu "
+                    "top=ch%u/m%u:%llu,ch%u/m%u:%llu,ch%u/m%u:%llu\n",
+                    static_cast<unsigned long long>(perf_event_total_cycles / stage_divisor),
+                    static_cast<unsigned long long>(render_total_cycles / stage_divisor),
+                    static_cast<unsigned long long>(perf_mix_total_cycles / stage_divisor),
+                    static_cast<unsigned long long>(perf_other_total_cycles / stage_divisor),
+                    static_cast<unsigned>(top_channel[0]),
+                    static_cast<unsigned>(player.channel[top_channel[0]].get_mode()),
+                    static_cast<unsigned long long>(top_cycles[0] / stage_divisor),
+                    static_cast<unsigned>(top_channel[1]),
+                    static_cast<unsigned>(player.channel[top_channel[1]].get_mode()),
+                    static_cast<unsigned long long>(top_cycles[1] / stage_divisor),
+                    static_cast<unsigned>(top_channel[2]),
+                    static_cast<unsigned>(player.channel[top_channel[2]].get_mode()),
+                    static_cast<unsigned long long>(top_cycles[2] / stage_divisor));
                 reset_perf_window();
             }
         }
